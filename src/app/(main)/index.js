@@ -1,9 +1,11 @@
 import { router } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import { ThemeToggle } from "../../components/theme-toggle";
+import { removeAccessToken } from "../../lib/auth";
 
 export default function Main() {
   const handleLogout = async () => {
+    await removeAccessToken();
     router.replace("/auth/login");
   };
 
