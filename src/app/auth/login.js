@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -62,71 +63,76 @@ export default function Login() {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-white dark:bg-gray-900"
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
-      <View className="flex-1 px-6 justify-center">
-        <Text className="text-3xl font-bold text-gray-900 dark:text-white mt-[67px] font-circular-bold w-64 mb-8">
-          Glad to meet you again!
-        </Text>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View className="flex-1 px-6 justify-center">
+          <Text className="text-3xl font-bold text-gray-900 dark:text-white mt-[67px] font-circular-bold w-64 mb-8">
+            Glad to meet you again!
+          </Text>
 
-        <View className="space-y-4">
-          <TextInput
-            className="w-full h-14 mb-4 px-4 bg-gray-50 bg-opacity-10 dark:bg-white/10 rounded-xl text-base text-gray-900 dark:text-white"
-            placeholder="Your Email"
-            placeholderTextColor="#9ca3af"
-            value={email}
-            onChangeText={setEmail}
-          />
-          <View className="flex-row items-center">
+          <View className="space-y-4">
             <TextInput
-              className="w-full h-14 mb-8 px-4 bg-gray-50 bg-opacity-10 dark:bg-white/10 rounded-xl text-base text-gray-900 dark:text-white"
-              placeholder="Enter your password"
+              className="w-full h-14 mb-4 px-4 bg-gray-50 bg-opacity-10 dark:bg-white/10 rounded-xl text-base text-gray-900 dark:text-white"
+              placeholder="Your Email"
               placeholderTextColor="#9ca3af"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
+              value={email}
+              onChangeText={setEmail}
             />
+            <View className="flex-row items-center">
+              <TextInput
+                className="w-full h-14 mb-8 px-4 bg-gray-50 bg-opacity-10 dark:bg-white/10 rounded-xl text-base text-gray-900 dark:text-white"
+                placeholder="Enter your password"
+                placeholderTextColor="#9ca3af"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                className="absolute right-4 bottom-1/2"
+              >
+                {showPassword ? (
+                  <Ionicons name="eye-off" size={24} color="#9ca3af" />
+                ) : (
+                  <Ionicons name="eye" size={24} color="#9ca3af" />
+                )}
+              </TouchableOpacity>
+            </View>
+            {error ? (
+              <Text className="text-red-500 text-center mb-2">{error}</Text>
+            ) : null}
             <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              className="absolute right-4 bottom-1/2"
+              className="w-full h-14 bg-emerald-900 rounded-xl items-center justify-center mb-4"
+              onPress={handleSignIn}
+              disabled={loading}
             >
-              {showPassword ? (
-                <Ionicons name="eye-off" size={24} color="#9ca3af" />
+              {loading ? (
+                <ActivityIndicator color="#fff" />
               ) : (
-                <Ionicons name="eye" size={24} color="#9ca3af" />
+                <Text className="text-white font-semibold text-[16px]">
+                  Sign In Now
+                </Text>
               )}
             </TouchableOpacity>
-          </View>
-          {error ? (
-            <Text className="text-red-500 text-center mb-2">{error}</Text>
-          ) : null}
-          <TouchableOpacity
-            className="w-full h-14 bg-emerald-900 rounded-xl items-center justify-center mb-4"
-            onPress={handleSignIn}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text className="text-white font-semibold text-[16px]">
-                Sign In Now
-              </Text>
-            )}
-          </TouchableOpacity>
-          <Text className="text-center text-[14px] text-black dark:text-white font-bold mb-4">
-            Or
-          </Text>
-          <TouchableOpacity
-            className="w-full h-14 bg-amber-300 rounded-xl items-center justify-center"
-            onPress={handleSignUp}
-          >
-            <Text className="text-white font-semibold text-[16px]">
-              Sign Up Now
+            <Text className="text-center text-[14px] text-black dark:text-white font-bold mb-4">
+              Or
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              className="w-full h-14 bg-amber-300 rounded-xl items-center justify-center"
+              onPress={handleSignUp}
+            >
+              <Text className="text-white font-semibold text-[16px]">
+                Sign Up Now
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }

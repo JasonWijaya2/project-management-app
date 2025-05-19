@@ -1,21 +1,21 @@
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState, useCallback } from "react";
-import { loadFonts } from "../lib/font";
+import { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import "../../global.css";
 import { ThemeProvider } from "../components/theme-provider";
-import Toast from "react-native-toast-message";
+import "../../global.css";
+import { loadFonts } from "../lib/font";
 
+// Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
 // Set the animation options. This is optional.
-SplashScreen.setOptions({
-  duration: 1000,
-  fade: true,
-});
+// SplashScreen.setOptions({
+//   duration: 1000,
+//   fade: true,
+// });
 
 export default function RootLayout() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -60,18 +60,14 @@ export default function RootLayout() {
               screenOptions={{
                 headerShown: false,
                 statusBarBackgroundColor: "#ffffff",
-                statusBarStyle: "dark",
                 contentStyle: {
                   backgroundColor: "#F2F2F2",
                 },
               }}
-            >
-              <StatusBar style="dark" />
-            </Stack>
+            />
           </SafeAreaView>
         </SafeAreaProvider>
       </ThemeProvider>
-      <Toast />
     </View>
   );
 }
